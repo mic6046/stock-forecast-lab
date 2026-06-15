@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stock Forecast Lab</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">HK and US Market Intelligence</p>
+          <h1>Stock Forecast Lab</h1>
+          <p class="subtitle">AI-Powered HK &amp; US Stock Forecasting</p>
+        </div>
+        <div class="status-pill" id="apiStatus">Ready</div>
+      </section>
+
+      <section class="forecast-card" aria-labelledby="forecastFormTitle">
+        <div class="form-heading">
+          <div>
+            <h2 id="forecastFormTitle">Run Forecast</h2>
+            <p>Enter a ticker, choose a market shortcut, and review model output.</p>
+          </div>
+          <label class="horizon-field">
+            <span>Horizon</span>
+            <select id="horizonInput">
+              <option value="15">15 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="60">60 days</option>
+              <option value="90">90 days</option>
+              <option value="120">120 days</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="search-row">
+          <label class="symbol-field">
+            <span>Stock symbol</span>
+            <input id="symbolInput" value="1818.HK" autocomplete="off" placeholder="Example: 0700.HK or NVDA" />
+          </label>
+          <button id="forecastButton" type="button">
+            <span class="button-text">Forecast</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="quick-section">
+          <div>
+            <span>HK Stocks</span>
+            <div class="quick-grid" aria-label="Hong Kong stock shortcuts">
+              <button type="button" data-symbol="0700.HK">0700.HK</button>
+              <button type="button" data-symbol="9988.HK">9988.HK</button>
+              <button type="button" data-symbol="0005.HK">0005.HK</button>
+              <button type="button" data-symbol="3690.HK">3690.HK</button>
+            </div>
+          </div>
+          <div>
+            <span>US Stocks</span>
+            <div class="quick-grid" aria-label="US stock shortcuts">
+              <button type="button" data-symbol="AAPL">AAPL</button>
+              <button type="button" data-symbol="MSFT">MSFT</button>
+              <button type="button" data-symbol="NVDA">NVDA</button>
+              <button type="button" data-symbol="TSLA">TSLA</button>
+              <button type="button" data-symbol="AMZN">AMZN</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="message" id="message" role="status"></div>
+      </section>
+
+      <section class="results-grid" id="results" hidden>
+        <article class="panel identity-panel">
+          <div class="panel-title">
+            <span>Forecast Result</span>
+            <strong id="signalBadge">--</strong>
+          </div>
+          <h2 id="resultSymbol">--</h2>
+          <p id="companyName">--</p>
+          <div class="metric-grid">
+            <div><span>Current Price</span><strong id="currentPrice">--</strong></div>
+            <div><span>Forecast Price</span><strong id="forecastPrice">--</strong></div>
+            <div><span>Forecast Return</span><strong id="forecastReturn">--</strong></div>
+            <div><span>Confidence Score</span><strong id="confidenceScore">--</strong></div>
+          </div>
+        </article>
+
+        <article class="panel risk-panel">
+          <div class="panel-title"><span>Risk Meter</span><strong id="riskLevel">--</strong></div>
+          <div class="risk-track"><div id="riskFill"></div></div>
+          <div class="risk-labels"><span>Low</span><span>Medium</span><span>High</span></div>
+          <p id="riskDetails">--</p>
+        </article>
+
+        <article class="panel summary-panel">
+          <div class="panel-title"><span>AI Summary</span></div>
+          <p id="aiSummary">--</p>
+        </article>
+      </section>
+
+      <section class="chart-grid" id="charts" hidden>
+        <article class="panel chart-panel">
+          <div class="panel-title"><span>Historical Price Chart</span></div>
+          <canvas id="historyChart"></canvas>
+        </article>
+        <article class="panel chart-panel">
+          <div class="panel-title"><span>Forecast Chart</span></div>
+          <canvas id="forecastChart"></canvas>
+        </article>
+      </section>
+
+      <section class="panel transparency-panel" id="transparency" hidden>
+        <div class="panel-title"><span>Model Transparency</span></div>
+        <div class="transparency-grid">
+          <div><h3>Model Weights</h3><div id="modelWeights" class="data-list"></div></div>
+          <div><h3>Backtest Statistics</h3><div id="backtestStats" class="data-list"></div></div>
+          <div><h3>Ensemble Contribution</h3><div id="ensembleContribution" class="data-list"></div></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
