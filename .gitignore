@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+work/
+outputs/
+.env
+.venv/
+venv/
